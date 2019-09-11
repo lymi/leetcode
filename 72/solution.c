@@ -22,11 +22,7 @@ int minDistance(char *word1, char *word2) {
   int M = strlen(word1);
   int N = strlen(word2);
 
-  int *DP[M];
-
-  for (int i = 0; i < M; i++) {
-    DP[i] = (int *)malloc(sizeof(int) * N);
-  } 
+  int DP[M+1][N+1];
 
   DP[0][0] = 0;
 
