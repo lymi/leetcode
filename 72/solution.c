@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <assert.h>
 
@@ -21,7 +22,11 @@ int minDistance(char *word1, char *word2) {
   int M = strlen(word1);
   int N = strlen(word2);
 
-  int DP[M][N];
+  int *DP[M];
+
+  for (int i = 0; i < M; i++) {
+    DP[i] = (int *)malloc(sizeof(int) * N);
+  } 
 
   DP[0][0] = 0;
 
