@@ -22,7 +22,7 @@ int minDistance(char *word1, char *word2) {
   int M = strlen(word1);
   int N = strlen(word2);
 
-  int DP[M+1][N+1];
+  int DP[M+5][N+5];
 
   DP[0][0] = 0;
 
@@ -52,7 +52,7 @@ int minDistance(char *word1, char *word2) {
     }
   }
 
-  return DP[M > 0 ? M - 1 : 0][N > 0 ? N - 1 : 0];
+  return DP[M-1][N-1];
 }
 
 int main() {
