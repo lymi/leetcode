@@ -23,6 +23,8 @@ int minDistance(char *word1, char *word2) {
 
   int DP[M][N];
 
+  DP[0][0] = 0;
+
   for (int i = 0; i < M; i++) {
     if (word1[i] == word2[0]) {
       DP[i][0] = i;
@@ -49,12 +51,13 @@ int minDistance(char *word1, char *word2) {
     }
   }
 
-  return DP[M-1][N-1];
+  return DP[M > 0 ? M - 1 : 0][N > 0 ? N - 1 : 0];
 }
 
 int main() {
   assert(minDistance("horse", "ros") == 3);
   assert(minDistance("intention", "execution") == 5);
+  assert(minDistance("", "") == 0);
 
   printf("ALL TESTS PASSED!\n");
   return 0;
