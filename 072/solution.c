@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
 #include <assert.h>
 
@@ -8,6 +7,7 @@
  *                字符所需的最少步骤。
  * 2. DP方程: if (word1[i] == word2[j]), DP[i][j] = DP[i-1][j-1]
  *            else DP[i][j] = 1 + min(DP[i-1][j], DP[i][j-1], DP[i-1][j-1])
+ *                                     (DELETE)    (INSERT)     (REPLACE)
  */
 
 int min(int x, int y, int z) {
