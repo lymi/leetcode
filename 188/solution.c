@@ -46,11 +46,12 @@ int maxProfit(int K, int *prices, int N) {
       DP[k][i] = 0;
     }
   }
-
+  
+  /**
   for (int k = 1; k <= K; k++) {
     for (int i = 1; i < N; i++) {
       int localMax = -prices[0];
-      
+ 
       for (int j = 0; j < i; j++) {
         if (DP[k-1][j] - prices[j] > localMax) {
           localMax = DP[k-1][j] - prices[j];
@@ -60,10 +61,22 @@ int maxProfit(int K, int *prices, int N) {
       DP[k][i] = max(DP[k-1][i], DP[k][i-1], prices[i] + localMax);
     }
   }
+  */
+
+  for (int k = 1; k <= K; k++) {
+    int localMax = -prices[0];
+
+    for (int i = 1; i < N; i++) {
+      if (DP[k-1][i-1] - prices[i-1] > localMax) {
+        localMax = DP[k-1][i-1] - prices[i-1]; 
+      }
+
+      DP[k][i] = max(DP[k-1][i], DP[k][i-1], prices[i] + localMax);
+    }
+  }
 
   return DP[K][N-1];
 }
-
 int main() {
   int arr1[3] = {2,4,1};
   printf("%d\n", maxProfit(2, arr1, 3));
