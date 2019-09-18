@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <assert.h>
+#include <stdlib.h>
 
 /**
  * 1. DP状态定义:
@@ -19,8 +20,16 @@ int max(int x, int y, int z) {
 
 int maxProfit(int* prices, int N, int fee) {
   int K = N / 2;
-  
-  int DP[K+1][N];
+  int **DP; 
+
+  for (int k = 0; k <= K; k++) {
+    DP = (int **)malloc((K+1) * sizeof(int *));
+  }
+
+  for (int i = 0; i < N; i++) {
+    *(DP + i) = (int *)malloc(N * sizeof (int));
+  }
+
 
   for (int k = 0; k <= K; k++) {
     for (int i = 0; i < N; i++) {
