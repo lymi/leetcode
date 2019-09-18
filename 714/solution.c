@@ -1,74 +1,30 @@
 #include <stdio.h>
 #include <assert.h>
-#include <stdlib.h>
 
 /**
  * 1. DP状态定义:
- *    DP[k][i]表示进行最多k次交易后第i+1天的最大收益。
- *    其中 k -> [0, N/2], i -> [0, N-1]
+ *    DP[i][j]表示到第i+1天结束且此时持有(j==1)或不持有(j==0)股票时的最大收益。
  * 2. DP转移方程:
- *    DP[k][i] = max(DP[k-1][i], DP[k][i-1], max(DP[k-1][j] - prices[j] + prices[i] - fee))
- *             = max(DP[k-1][i], DP[k][i-1], max(DP[k-1][j] - prices[j]) + prices[i] - fee)
- *                                           |-------- localMax -------|
- *                                                    0 <= j < i
+ *    DP[i][0] = max(DP[i-1][0], DP[i-1][1] + prices[i] - fee)
+ *    DP[i][1] = max(DP[i-1][1], DP[i-1][0] - prices[i]) 
  */
 
-int max(int x, int y, int z) {
-  int r = x > y ? x : y;
-  return r > z ? r : z;
+int max(int x, int y) {
+  return x > y ? x : y;
 }
 
 int maxProfit(int* prices, int N, int fee) {
-  int K = N / 2;
+  int DP[N][2];
 
-  /**
-  int DP[K+1][N]; 
+  DP[0][0] = 0;
+  DP[0][1] = -prices[0];
 
-  for (int k = 0; k <= K; k++) {
-    for (int i = 0; i < N; i++) {
-      DP[k][i] = 0;
-    }
+  for (int i = 1; i < N; i++) {
+    DP[i][0] = max(DP[i-1][0], DP[i-1][1] + prices[i] - fee);
+    DP[i][1] = max(DP[i-1][1], DP[i-1][0] - prices[i]);
   }
 
-  for (int k = 1; k <= K; k++) {
-    int localMax = -prices[0];
-    for (int i = 1; i < N; i++) {
-      if (DP[k-1][i-1] - prices[i-1] > localMax) {
-        localMax = DP[k-1][i-1] - prices[i-1];
-      }
-
-      DP[k][i] = max(DP[k-1][i], DP[k][i-1], localMax + prices[i] - fee);
-    }
-  }
-
-  return DP[K][N-1];
-  */
-
-  /**
-   * 为防止内存溢出，二维数组的第一个维度重复使用
-   * res[0][i] 代表 DP[k][i]的值
-   * res[1][i] 代表 DP[k-1][i]的值
-   */
-  int res[2][N];
-
-  for (int i = 0; i < N; i++) {
-    res[0][i] = 0;
-    res[1][i] = 0;
-  }
-
-  for (int k = 1; k <= K; k++) {
-    int localMax = -prices[0];
-
-    for (int i = 1; i < N; i++) {
-      if (res[1][i-1] - prices[i-1] > localMax) {
-        localMax = res[1][i-1] - prices[i-1];
-      }
-      res[0][i] = max(res[1][i], res[0][i-1], localMax + prices[i] - fee);
-      res[1][i] = res[0][i];
-    }
-  }
-
-  return res[0][N-1];
+  return DP[N-1][0];
 }
 
 int main() {
