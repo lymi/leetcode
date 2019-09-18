@@ -11,11 +11,8 @@
  */
 
 int min(int x, int y, int z) {
-  int r = x;
-  if (y < r) r = y;
-  if (z < r) r = z;
-
-  return r;
+  int ret = x < y ? x : y;
+  return ret < z ? ret : z;
 }
 
 int minDistance(char *word1, char *word2) {
