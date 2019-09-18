@@ -20,16 +20,9 @@ int max(int x, int y, int z) {
 
 int maxProfit(int* prices, int N, int fee) {
   int K = N / 2;
-  int **DP; 
 
-  for (int k = 0; k <= K; k++) {
-    DP = (int **)malloc((K+1) * sizeof(int *));
-  }
-
-  for (int i = 0; i < N; i++) {
-    *(DP + i) = (int *)malloc(N * sizeof (int));
-  }
-
+  /**
+  int DP[K+1][N]; 
 
   for (int k = 0; k <= K; k++) {
     for (int i = 0; i < N; i++) {
@@ -49,6 +42,33 @@ int maxProfit(int* prices, int N, int fee) {
   }
 
   return DP[K][N-1];
+  */
+
+  /**
+   * 为防止内存溢出，二维数组的第一个维度重复使用
+   * res[0][i] 代表 DP[k][i]的值
+   * res[1][i] 代表 DP[k-1][i]的值
+   */
+  int res[2][N];
+
+  for (int i = 0; i < N; i++) {
+    res[0][i] = 0;
+    res[1][i] = 0;
+  }
+
+  for (int k = 1; k <= K; k++) {
+    int localMax = -prices[0];
+
+    for (int i = 1; i < N; i++) {
+      if (res[1][i-1] - prices[i-1] > localMax) {
+        localMax = res[1][i-1] - prices[i-1];
+      }
+      res[0][i] = max(res[1][i], res[0][i-1], localMax + prices[i] - fee);
+      res[1][i] = res[0][i];
+    }
+  }
+
+  return res[0][N-1];
 }
 
 int main() {
