@@ -14,6 +14,7 @@ int max(int x, int y) {
 }
 
 int maxProfit(int *prices, int N) {
+  if (N <= 1) return 0;
   int DP[N][2];
 
   DP[0][0] = 0;
