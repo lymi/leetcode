@@ -37,10 +37,9 @@ int canPartition(int* nums, int N){
     for (int i = 0; i < N; i++) {
       used[m][i] = 0;
 
-      if (m == nums[i]) {
+      if (m == nums[i] && DP[m] == 0) {
         DP[m] = 1;
         used[m][i] = 1;
-        continue;
       }
     }
   }
@@ -63,10 +62,15 @@ int canPartition(int* nums, int N){
 
     if (min < MAX_INF) {
       DP[m] = 1 + min;
+      for (int j = 0; j < N; j++) {
+        if (used[m - nums[minIdx]][j] == 1) {
+          used[m][j] = 1;
+        }
+      }
       used[m][minIdx] = 1;
     }
   }
-
+ 
   if (DP[MID] > 0) {
     return 1;
   }
@@ -74,14 +78,16 @@ int canPartition(int* nums, int N){
 }
 
 int main() {
-  /*
   int arr1[4] = {1,5,11,5};
   assert(canPartition(arr1, 4) == 1);
   int arr2[4] = {1,2,3,5};
   assert(canPartition(arr2, 4) == 0);
-  */
   int arr3[3] = {1,2,5};
   assert(canPartition(arr3, 3) == 0);
+  int arr4[4] = {1,1,1,1};
+  assert(canPartition(arr4, 4) == 1);
+  int arr5[6] = {1,3,5,5,5,5};
+  assert(canPartition(arr5, 6) == 0);
 
   printf("ALL TESTS PASSED!\n");
   return 0;
