@@ -1,80 +1,39 @@
 #include <stdio.h>
 #include <assert.h>
 
-#define MAX_INF 1000
-
 /**
- * 如果所有元素之和为奇数，则一定不能划分成和相等的两部分。
- * 如果所有元素之和为偶数，则问题可转化为能否找到任意多个
- * 元素相加结果为SUM / 2，每个元素只能使用一次。
- *
  * 1. DP状态定义:
- *    DP[m] 表示和为 m 时需要的最少数组元素的个数
- *    used[m][i] 表示和为 m 时元素 i 是否被使用过, 0 -- 未使用, 1 -- 已使用
+ *    DP[i][j] 代表取索引i之前的任意多个数字相加能否为j
+ *    0 -- 不能，1 -- 能
  * 2. DP转移方程:
- *    DP[m] = 1 + min{DP[m - nums[i]] != 0 && used[m - nums[i]][i] == 0}
- *                         (0 <= i <= N-1)
+ *    DP[i][j] = DP[i-1][j] || DP[i-1][j-nums[i]]
  */
-
-int canPartition(int* nums, int N){
+int canPartition(int* nums, int N) {
   if (N <= 1) return 0;
 
   int sum = 0;
+
+  for (int i = 0; i < N; i++) sum += nums[i];
+
+  if (sum % 2 != 0) return 0;
+  
+  int target = sum / 2;
+  int DP[N][target+1];
+
   for (int i = 0; i < N; i++) {
-    sum += nums[i];
+    for (int j = 1; j <= target; j++) {
+      DP[i][j] = 0;
+    }
+    DP[i][0] = 1;
   }
 
-  if (sum % 2 != 0) {
-    return 0;
-  }
-
-  int MID = sum / 2;
-  int DP[MID + 1];
-  int used[MID+1][N];
-
-  for (int m = 0; m <= MID; m++) {
-    DP[m] = 0;
-    for (int i = 0; i < N; i++) {
-      used[m][i] = 0;
-
-      if (m == nums[i] && DP[m] == 0) {
-        DP[m] = 1;
-        used[m][i] = 1;
-      }
+  for (int i = 1; i < N; i++) {
+    for (int j = target; j >= nums[i]; j--) {
+      DP[i][j] = DP[i-1][j] || DP[i-1][j-nums[i]];
     }
   }
 
-  for (int m = 1; m <= MID; m++) {
-    if (DP[m] == 1) {
-      continue;
-    }
-
-    int min = MAX_INF;
-    int minIdx = 0;
-
-    for (int i = 0; i < N; i++) {
-      if (m > nums[i] && DP[m-nums[i]] != 0 &&
-          used[m-nums[i]][i] == 0 && min > DP[m-nums[i]]) {
-        min = DP[m - nums[i]];
-        minIdx = i;
-      }
-    }
-
-    if (min < MAX_INF) {
-      DP[m] = 1 + min;
-      for (int j = 0; j < N; j++) {
-        if (used[m - nums[minIdx]][j] == 1) {
-          used[m][j] = 1;
-        }
-      }
-      used[m][minIdx] = 1;
-    }
-  }
- 
-  if (DP[MID] > 0) {
-    return 1;
-  }
-  return 0;
+  return DP[N-1][target];
 }
 
 int main() {
