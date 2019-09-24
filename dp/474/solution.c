@@ -28,7 +28,7 @@ int findMaxForm(char **strs, int S, int M, int N) {
 
   for (int m = 0; m <= M; m++) {
     for (int n = 0; n <= N; n++) {
-      if (count(strs[0], '0') <= M && count(strs[0], '1') <= N) {
+      if (count(strs[0], '0') <= m && count(strs[0], '1') <= n) {
         DP[0][m][n] = 1;
       } else {
         DP[0][m][n] = 0;
@@ -36,16 +36,13 @@ int findMaxForm(char **strs, int S, int M, int N) {
     }
   }
 
-  DP[0][0][0] = 0;
-
   for (int i = 1; i < S; i++) {
     for (int m = 0; m <= M; m++) {
       for (int n = 0; n <= N; n++) {
-        int prevcnt0 = m - count(strs[i], '0');
-        int prevcnt1 = n - count(strs[i], '1');
-
-        if (prevcnt0 >= 0 && prevcnt1 >= 0) {
-          DP[i][m][n] = max(DP[i-1][m][n], DP[i-1][prevcnt0][prevcnt1] + 1);
+        int cnt0 = count(strs[i], '0');
+        int cnt1 = count(strs[i], '1');
+        if (m >= cnt0 && n >= cnt1) {
+          DP[i][m][n] = max(DP[i-1][m][n], DP[i-1][m-cnt0][n-cnt1] + 1);
         } else {
           DP[i][m][n] = DP[i-1][m][n];
         }
@@ -57,11 +54,12 @@ int findMaxForm(char **strs, int S, int M, int N) {
 }
 
 int main() {
-  char *strs1[5] = {"10", "0001", "111001", "1", "0"};
+  char *strs1[5] = {"10","0001","111001","1","0"};
   assert(findMaxForm(strs1, 5, 5, 3) == 4);
-  char *strs2[3] = {"10", "0", "1"};
+  assert(findMaxForm(strs1, 5, 4, 3) == 3);
+  char *strs2[3] = {"10","0","1"};
   assert(findMaxForm(strs2, 3, 1, 1) == 2);
-  
+
   printf("ALL TESTS PASSED!\n");
   return 0;
 }
