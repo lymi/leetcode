@@ -26,13 +26,11 @@ int maxProfit(int *prices, int N) {
     DP[i][0] = max(DP[i-1][0], DP[i-1][1] + prices[i]);
     DP[i][1] = max(DP[i-1][1], DP[i-2][0] - prices[i]);
   }
-
   return DP[N-1][0];
 }
 
 int main() {
   int arr1[5] = {1,2,3,0,2};
-
   assert(maxProfit(arr1, 5) == 3);
 
   printf("ALL TESTS PASSED!\n");
