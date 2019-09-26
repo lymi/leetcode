@@ -19,7 +19,7 @@ int minDistance(char *word1, char *word2) {
   int M = strlen(word1);
   int N = strlen(word2);
 
-  int DP[M+5][N+5];
+  int DP[M+1][N+1];
 
   for (int i = 0; i <= M; i++) {
     DP[i][0] = i;
