@@ -10,6 +10,7 @@
  *    空间优化后:
  *    DP[j] = DP[j] || DP[j-nums[i]]
  */
+
 int canPartition(int* nums, int N) {
   if (N <= 1) return 0;
   int sum = 0;
@@ -19,7 +20,6 @@ int canPartition(int* nums, int N) {
   int DP[N][target+1];
 
   DP[0][0] = 1;
- 
   for (int j = 1; j <= target; j++) {
     DP[0][j] = nums[0] == j ? 1 : 0;
   }
@@ -35,7 +35,6 @@ int canPartition(int* nums, int N) {
   }
 
   return DP[N-1][target];
-
   /*********** 空间优化 **************
   int DP[target+1];
 
