@@ -8,27 +8,27 @@
  *    DP[i] = 1 + min(DP[i-coins[j]])
  *                   (0 <= j < N)
  */
-
 int coinChange(int *coins, int N, int amount) {
-  int DP[amount+1];
+  int DP[amount+1], min, dp;
 
+  DP[0] = 0;
   for (int i = 1; i <= amount; i++) {
     DP[i] = -1;
   }
-  
-  DP[0] = 0;
 
   for (int i = 1; i <= amount; i++) {
-    int temp = -1;
+    min = -1;
     for (int j = 0; j < N; j++) {
       if (i < coins[j]) continue;
-      if (temp == -1 || temp > DP[i-coins[j]]) {
-        temp = DP[i-coins[j]];
+      dp = DP[i-coins[j]];
+      if (dp == -1) continue;
+      if (min == -1 || min > dp) {
+        min = dp;
       }
     }
-
-    if (temp > -1) {
-      DP[i] = 1 + temp;
+    
+    if (min > -1) {
+      DP[i] = 1 + min;
     }
   }
 
@@ -42,6 +42,8 @@ int main() {
   assert(coinChange(coins2, 1, 3) == -1);
   int coins3[1] = {1};
   assert(coinChange(coins3, 1, 0) == 0);
+  int coins4[4] = {186, 419, 83, 408};
+  assert(coinChange(coins4, 4, 6249) == 20);
 
   printf("ALL TESTS PASSED!\n");
   return 0;
