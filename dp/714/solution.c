@@ -17,7 +17,6 @@ int max(int x, int y) {
 
 int maxProfit(int* prices, int N, int fee) {
   int DP[N][2];
-
   DP[0][0] = 0;
   DP[0][1] = -prices[0];
 
