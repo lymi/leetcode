@@ -10,6 +10,7 @@
  *    空间优化后:
  *    DP[j] = DP[j] + DP[j-nums[i]]
  */
+
 int findTargetSumWays(int* nums, int N, int S) {
   int sum = 0;
   for (int i = 0; i < N; i++) sum += nums[i];
@@ -36,7 +37,6 @@ int findTargetSumWays(int* nums, int N, int S) {
       }
     }
   }
-
   return DP[N-1][target];
 
   /************* 空间优化 ***************
