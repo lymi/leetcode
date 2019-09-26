@@ -6,6 +6,7 @@
  *    DP[i] 表示构成面额 i 一共多少种组合方式。
  * 2. DP转移方程
  *    DP[i] = SUM(DP[i-coins[j]])
+ *    为避免重复计算，将 j 作为外层循环
  */
 int change(int amount, int *coins, int N) {
   int DP[amount+1];
