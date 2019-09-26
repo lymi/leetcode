@@ -12,17 +12,13 @@
 int coinChange(int *coins, int N, int amount) {
   int DP[amount+1];
 
-  for (int i = 0; i <= amount; i++) {
+  for (int i = 1; i <= amount; i++) {
     DP[i] = -1;
-    for (int j = 0; j < N; j++) {
-      if (coins[j] == i) {
-        DP[i] = 1;
-        break;
-      }
-    }
   }
+  
+  DP[0] = 0;
 
-  for (int i = 0; i <= amount; i++) {
+  for (int i = 1; i <= amount; i++) {
     int temp = -1;
     for (int j = 0; j < N; j++) {
       if (i < coins[j]) continue;
@@ -31,7 +27,7 @@ int coinChange(int *coins, int N, int amount) {
       }
     }
 
-    if (temp > 0) {
+    if (temp > -1) {
       DP[i] = 1 + temp;
     }
   }
@@ -44,6 +40,8 @@ int main() {
   assert(coinChange(coins1, 3, 11) == 3);
   int coins2[1] = {2};
   assert(coinChange(coins2, 1, 3) == -1);
+  int coins3[1] = {1};
+  assert(coinChange(coins3, 1, 0) == 0);
 
   printf("ALL TESTS PASSED!\n");
   return 0;
