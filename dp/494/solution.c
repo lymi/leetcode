@@ -26,7 +26,7 @@ int findTargetSumWays(int* nums, int N, int S) {
   DP[0] = 1;
 
   for (int i = 0; i < N; i++) {
-    for (int j = nums[i]; j <= target; j++) {
+    for (int j = target; j >= nums[i]; j--) {
       DP[j] = DP[j] + DP[j-nums[i]];
     } 
   }
