@@ -33,6 +33,7 @@ int coinChange(int *coins, int N, int amount) {
   if (DP[amount] == POS_MAX) {
     return -1;
   }
+
   return DP[amount];
 }
 
