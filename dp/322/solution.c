@@ -23,8 +23,10 @@ int coinChange(int *coins, int N, int amount) {
   }
 
   for (int j = 0; j < N; j++) {
-    for (int i = coins[j]; i <= amount; i++) {
-      DP[i] = min(DP[i], 1 + DP[i-coins[j]]);
+    for (int i = 0; i <= amount; i++) {
+      if (i >= coins[j]) {
+        DP[i] = min(DP[i], 1 + DP[i-coins[j]]);
+      }
     }
   }
 
