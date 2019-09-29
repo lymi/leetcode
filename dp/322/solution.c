@@ -2,9 +2,12 @@
 #include <assert.h>
 
 /**
+ * 限定: 每种面值的硬币可以选无限多
+ *
  * 1. DP状态定义:
- *    DP[i] 代表构成面额i最少需要的硬币数, 每种面值的硬币可以选无限多
+ *    DP[i] 代表构成面额i最少需要的硬币数
  * 2. DP转移方程:
+ *    采用自底向上递推的方式, 初始时i = 1
  *    DP[i] = 1 + min(i-coins[j])
  *                      (0 <= j < N)
  */   
@@ -22,14 +25,14 @@ int coinChange(int *coins, int N, int amount) {
     DP[j] = MAX;
   }
 
-  for (int j = 0; j < N; j++) {
-    for (int i = 0; i <= amount; i++) {
+  for (int i = 1; i <= amount; i++) {
+    for (int j = 0; j < N; j++) {
       if (i >= coins[j]) {
         DP[i] = min(DP[i], 1 + DP[i-coins[j]]);
       }
     }
   }
-
+ 
   return DP[amount] == MAX ? -1 : DP[amount];
 }
 
