@@ -1,40 +1,35 @@
 #include <stdio.h>
 #include <assert.h>
 
-#define POS_MAX 999999
-
 /**
  * 1. DP状态定义:
- *    DP[i][j] 代表当只使用前i+1个面值的硬币去组成面额j需要的最少硬币数
+ *    DP[i] 代表构成面额i最少需要的硬币数
  * 2. DP转移方程:
- *    DP[i][j] = min(DP[i-1][j], 1 + DP[i-1][j-coins[i]])
- *    空间优化:
- *    DP[j] = min(DP[j], 1 + DP[j-coins[i]])
- */
+ *    DP[i] = 1 + min(i-coins[j])
+ *                      (0 <= j < N)
+ */   
 
 int min(int x, int y) {
   return x < y ? x : y;
 }
 
 int coinChange(int *coins, int N, int amount) {
-  int DP[amount+1];
+  int MAX = amount + 1;
+  int DP[MAX];
 
   DP[0] = 0;
   for (int j = 1; j <= amount; j++) {
-    DP[j] = POS_MAX;
+    DP[j] = MAX;
   }
-
-  for (int i = 0; i < N; i++) {
-    for (int j = coins[i]; j <= amount; j++) {
-      DP[j] = min(DP[j], 1 + DP[j-coins[i]]);
+  
+  for (int i = 1; i <= amount; i++) {
+    for (int j = 0; j < N; j++) {
+      if (i < coins[j]) continue;
+      DP[i] = min(DP[i], 1 + DP[i-coins[j]]);
     }
   }
 
-  if (DP[amount] == POS_MAX) {
-    return -1;
-  }
-
-  return DP[amount];
+  return DP[amount] == MAX ? -1 : DP[amount];
 }
 
 int main() {
