@@ -21,12 +21,10 @@ int coinChange(int *coins, int N, int amount) {
   for (int j = 1; j <= amount; j++) {
     DP[j] = MAX;
   }
-  
-  for (int i = 1; i <= amount; i++) {
-    for (int j = 0; j < N; j++) {
-      if (i >= coins[j]) {
-        DP[i] = min(DP[i], 1 + DP[i-coins[j]]);
-      }
+
+  for (int j = 0; j < N; j++) {
+    for (int i = coins[j]; i <= amount; i++) {
+      DP[i] = min(DP[i], 1 + DP[i-coins[j]]);
     }
   }
 
