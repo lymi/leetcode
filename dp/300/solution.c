@@ -11,6 +11,7 @@
  */
 
 int lengthOfLIS(int *nums, int N) {
+  if (N <= 0) return 0;
   int DP[N], max, ret = 0;
 
   DP[0] = 0;
@@ -33,8 +34,10 @@ int lengthOfLIS(int *nums, int N) {
 }
 
 int main() {
-  int nums[8] = {10,9,2,5,3,7,101,18};
-  assert(lengthOfLIS(nums, 8) == 4);
+  int nums1[8] = {10,9,2,5,3,7,101,18};
+  int nums2[0] = {};
+  assert(lengthOfLIS(nums1, 8) == 4);
+  assert(lengthOfLIS(nums2, 0) == 0);
 
   printf("ALL TESTS PASSED!\n");
   return 0;
