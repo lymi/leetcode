@@ -1,4 +1,3 @@
 #!/bin/bash
-gcc -o solution.o solution.c
-./solution.o
-
+javac Solution.java
+java Solution
