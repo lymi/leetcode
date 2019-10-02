@@ -10,7 +10,7 @@
 
 int numSquares(int n) {
   int MAX = n + 1;
-  int DP[n+1];
+  int DP[n+1], temp;
 
   DP[0] = 0;
 
@@ -20,7 +20,10 @@ int numSquares(int n) {
 
   for (int i = 0; i <= n; i++) {
     for (int j = 0; j <= sqrt(i); j++) {
-      if (DP[i] > DP[i-j*j]) DP[i] = DP[i-j*j];
+      temp = DP[i-j*j] + 1;
+      if (DP[i] > temp) {
+        DP[i] = temp;
+      }
     }
   }
 
