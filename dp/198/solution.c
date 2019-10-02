@@ -13,20 +13,22 @@ int max(int x, int y) {
 int rob(int *nums, int N) {
   if (N == 0) return 0;
   if (N == 1) return nums[0];
-  int dp0 = nums[0], dp1 = max(nums[0], nums[1]), dp2;
+  int DP[N];
+  DP[0] = nums[0];
+  DP[1] = max(nums[0], nums[1]);
 
   for (int i = 2; i < N; i++) {
-    dp2 = max(dp0 + nums[i], dp1);
-    dp0 = dp1;
-    dp1 = dp2;
+    DP[i] = max(DP[i-2] + nums[i], DP[i-1]);
   }
 
-  return dp2;
+  return DP[N-1];
 }
 
 int main() {
   int nums1[5] = {1,3,1,3,100};
   assert(rob(nums1, 5) == 103);
+  int nums2[2] = {0, 0};
+  assert(rob(nums2, 2) == 0);
 
   printf("ALL TESTS PASSED!\n");
   return 0;
