@@ -3,8 +3,9 @@
 #include <math.h>
 
 /**
- * 1. DP[i] 表示数字i能分解几个数平方和需要的最少数字个数。
- * 2. DP[i + j*j] =  min{ DP[i+j*j], DP[i] + 1 }
+ * 1. DP[i]: 将数字 i 能分解平方和需要的最少数字个数。
+ * 2. DP[i] = min{ DP[i-j*j] } + 1
+ *                (0 <= j <= sqrt(i))
  */
 
 int min(int x, int y) {
@@ -13,16 +14,18 @@ int min(int x, int y) {
 
 int numSquares(int n) {
   int MAX = n + 1;
-  int DP[n+1];
+  int DP[n+1], temp;
 
   DP[0] = 0;
-  for (int i = 1; i <= n; i++) {
+
+  for (int i = 1; i < MAX; i++) {
     DP[i] = MAX;
   }
 
   for (int i = 0; i <= n; i++) {
-    for (int j = 1; i + j*j <= n; j++) {
-      DP[i+j*j] = min(DP[i+j*j], DP[i]+1);
+    for (int j = 0; j <= sqrt(i); j++) {
+      temp = DP[i-j*j] + 1;
+      if (DP[i] > temp) DP[i] = temp;
     }
   }
 
