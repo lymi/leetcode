@@ -9,12 +9,11 @@
 int uniquePaths(int m, int n){
   int DP[m][n];
 
-  DP[0][0] = 0;
-  for (int i = 1; i < m; i++) {
+  for (int i = 0; i < m; i++) {
     DP[i][0] = 1;
   }
 
-  for (int j = 1; j < n; j++) {
+  for (int j = 0; j < n; j++) {
     DP[0][j] = 1;
   }
 
@@ -29,5 +28,6 @@ int uniquePaths(int m, int n){
 
 int main() {
  assert(uniquePaths(3,2) == 3); 
+ assert(uniquePaths(1,1) == 1);
  printf("ALL TESTS PASSED!\n");
 }
