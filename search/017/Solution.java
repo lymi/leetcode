@@ -1,23 +1,23 @@
-import java.util.List;
+import java.util.*;
 
 class Solution {
   private static final String[] KEYS = {"", "", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
   private int N;
 
-  public void backtrace(String prefix, List<String> ret, String digits) {
+  public void backtrace(StringBuilder prefix, List<String> ret, String digits) {
     int len = prefix.length();
     if (len == N) {
-      ret.add(prefix);
+      ret.add(prefix.toString());
       return;
     }
 
-    int index = digits.charAt(len + 1) - '0';
+    int index = digits.charAt(len) - '0';
     String str = KEYS[index];
 
     for (char c : str.toCharArray()) {
-      prefix += c;
+      prefix.append(c);
       backtrace(prefix, ret, digits);
-      prefix.substring(0, len);
+      prefix.deleteCharAt(prefix.length() - 1);
     }
   }
 
@@ -27,8 +27,15 @@ class Solution {
 
     if (digits == null || N == 0) return ret;
 
-    backtrace(new String(), ret, digits);
-    return ret.toString();
+    backtrace(new StringBuilder(), ret, digits);
+    return ret;
+  }
+
+  public static void main(String args[]) {
+    List<String> ret = new Solution().letterCombinations("23");
+    for (String s : ret) {
+      System.out.print(s + " ");
+    }
   }
 }
 
