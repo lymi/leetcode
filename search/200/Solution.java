@@ -20,6 +20,7 @@ class Solution {
   public int numIslands(char[][] grid) {
     this.grid = grid;
     M = grid.length;
+    if (M == 0) return 0;
     N = grid[0].length;
     int cnt = 0;
 
