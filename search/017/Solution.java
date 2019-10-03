@@ -10,10 +10,8 @@ class Solution {
       ret.add(prefix.toString());
       return;
     }
-
     int index = digits.charAt(len) - '0';
     String str = KEYS[index];
-
     for (char c : str.toCharArray()) {
       prefix.append(c);
       backtrace(prefix, ret, digits);
@@ -24,9 +22,7 @@ class Solution {
   public List<String> letterCombinations(String digits) {
     List<String> ret = new ArrayList<>();
     N = digits.length();
-
     if (digits == null || N == 0) return ret;
-
     backtrace(new StringBuilder(), ret, digits);
     return ret;
   }
@@ -36,6 +32,7 @@ class Solution {
     for (String s : ret) {
       System.out.print(s + " ");
     }
+    System.out.println();
   }
 }
 
