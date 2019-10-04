@@ -35,7 +35,7 @@ class Solution {
     }
   }
 
-  public List<List<Integer>> permute(int[] nums) {
+  public List<List<Integer>> permuteUnique(int[] nums) {
     N = nums.length;
     if (N == 0) return ret; 
     this.nums = nums;
@@ -46,7 +46,7 @@ class Solution {
 
   public static void main(String args[]) { 
     int data[] = {1,2,1};
-    List<List<Integer>> lists = new Solution().permute(data);
+    List<List<Integer>> lists = new Solution().permuteUnique(data);
     
     for(List<Integer> list : lists) {
       for (int i : list) {
