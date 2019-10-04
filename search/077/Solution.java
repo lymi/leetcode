@@ -4,15 +4,15 @@ class Solution {
   private int N, K;
   List<List<Integer>> ret = new ArrayList<>();
 
-  public void backtrace(List<Integer> list, int start) {
+  public void backtrace(List<Integer> list, int start, int k) {
     if (list.size() == K) {
       ret.add(new ArrayList<Integer>(list));
       return;
     }
 
-    for (int i = start; i <= N; i++) {
+    for (int i = start; i <= N-k+1; i++) {
       list.add(i);
-      backtrace(list, i + 1);
+      backtrace(list, i+1, k-1);
       list.remove(list.size() - 1);
     }
   }
@@ -21,7 +21,7 @@ class Solution {
     N = n;
     K = k; 
     if (N == 0) return ret;
-    backtrace(new ArrayList<Integer>(), 1);
+    backtrace(new ArrayList<Integer>(), 1, K);
     return ret;
   }
 
