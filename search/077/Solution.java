@@ -9,7 +9,6 @@ class Solution {
       ret.add(new ArrayList<Integer>(list));
       return;
     }
-
     for (int i = start; i <= N-k+1; i++) {
       list.add(i);
       backtrace(list, i+1, k-1);
