@@ -3,8 +3,10 @@ import java.util.*;
 class Solution {
   private static final String[] KEYS = {"", "", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
   private int N;
+  private String digits;
+  private List<String> ret = new ArrayList<>();
 
-  public void backtrace(StringBuilder prefix, List<String> ret, String digits) {
+  public void backtrace(StringBuilder prefix) {
     int len = prefix.length();
     if (len == N) {
       ret.add(prefix.toString());
@@ -14,16 +16,16 @@ class Solution {
     String str = KEYS[index];
     for (char c : str.toCharArray()) {
       prefix.append(c);
-      backtrace(prefix, ret, digits);
+      backtrace(prefix);
       prefix.deleteCharAt(prefix.length() - 1);
     }
   }
 
   public List<String> letterCombinations(String digits) {
-    List<String> ret = new ArrayList<>();
     N = digits.length();
     if (digits == null || N == 0) return ret;
-    backtrace(new StringBuilder(), ret, digits);
+    this.digits = digits;
+    backtrace(new StringBuilder());
     return ret;
   }
 
