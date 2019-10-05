@@ -19,9 +19,8 @@ class Solution {
       duplicated = false;
 
       for (int j = 0; j < i; j++) {
+        // 重复的数字只允许出现在同一递归链中，不能出现在不同的递归链中。
         if (candidates[i] == candidates[j] && !visited[j]) {
-          // 出现重复数字, 且之前出现的该数字不在当前递归链中,
-          // 说明当前组合之前已出现过，跳过。
           duplicated = true;
           break;
         }
