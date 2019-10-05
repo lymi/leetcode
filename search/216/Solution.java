@@ -18,14 +18,14 @@ class Solution {
     }
   }
 
-  public List<List<Integer>> combinationSum2(int k, int target) {
+  public List<List<Integer>> combinationSum3(int k, int target) {
     if (k == 0) return ret;
     traceback(new ArrayList<Integer>(), 1, k, target);
     return ret;
   }
 
   public static void main(String args[]) {
-    List<List<Integer>> lists = new Solution().combinationSum2(3, 9);
+    List<List<Integer>> lists = new Solution().combinationSum3(3, 9);
     for (List<Integer> list : lists) {
       for (int i : list) {
         System.out.print(i + " ");
