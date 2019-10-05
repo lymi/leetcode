@@ -3,7 +3,6 @@ import java.util.*;
 class Solution {
   private List<List<Integer>> ret = new ArrayList<>();
   private int[] candidates;
-  private boolean[] visited;
   private int N;
 
   public void traceback(List<Integer> list, int start, int target) {
@@ -28,7 +27,6 @@ class Solution {
     if (N == 0) return ret;
     Arrays.sort(candidates);
     this.candidates = candidates;
-    visited = new boolean[N];
 
     traceback(new ArrayList<Integer>(), 0, target);
 
