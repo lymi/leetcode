@@ -3,6 +3,7 @@ import java.util.*;
 class Solution {
   private List<List<Integer>> ret = new ArrayList<>();
   private int[] candidates;
+  private boolean[] visited;
   private int N;
 
   public void traceback(List<Integer> list, int start, int target) {
@@ -18,7 +19,9 @@ class Solution {
       duplicated = false;
 
       for (int j = 0; j < i; j++) {
-        if (candidates[i] == candidates[j]) {
+        if (candidates[i] == candidates[j] && !visited[j]) {
+          // 出现重复数字, 且之前出现的该数字不在当前递归链中,
+          // 说明当前组合之前已出现过，跳过。
           duplicated = true;
           break;
         }
@@ -29,7 +32,9 @@ class Solution {
       }
 
       list.add(candidates[i]);
-      traceback(list, i, target-candidates[i]);
+      visited[i] = true;
+      traceback(list, i+1, target-candidates[i]);
+      visited[i] = false;
       list.remove(list.size() - 1);
     }
   }
@@ -38,6 +43,7 @@ class Solution {
     N = candidates.length;
     if (N == 0) return ret;
     this.candidates = candidates;
+    visited = new boolean[N];
 
     traceback(new ArrayList<Integer>(), 0, target);
 
