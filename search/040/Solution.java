@@ -13,34 +13,20 @@ class Solution {
     }
 
     if (target < 0) return;
-    boolean duplicated;
 
     for (int i = start; i < N; i++) {
-      duplicated = false;
-
-      for (int j = 0; j < i; j++) {
-        // 重复的数字只允许出现在同一递归链中，不能出现在不同的递归链中。
-        if (candidates[i] == candidates[j] && !visited[j]) {
-          duplicated = true;
-          break;
-        }
-      }
-
-      if (duplicated) {
-        continue;
-      }
-
       list.add(candidates[i]);
-      visited[i] = true;
       traceback(list, i+1, target-candidates[i]);
-      visited[i] = false;
       list.remove(list.size() - 1);
+
+      while(i < N - 1 && candidates[i] == candidates[i+1]) { i++; }
     }
   }
 
   public List<List<Integer>> combinationSum2(int[] candidates, int target) {
     N = candidates.length;
     if (N == 0) return ret;
+    Arrays.sort(candidates);
     this.candidates = candidates;
     visited = new boolean[N];
 
