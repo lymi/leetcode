@@ -1,11 +1,14 @@
 import java.util.*; 
 
 class Solution {
+  /**
+   * 用pattern与自身从下标为1的位置开始进行比较
+   * next[i]代表下标 0 -> i-1 的子串重复前后缀的最大长度
+   */
   private int[] getNext(char[] pattern) {
     int N = pattern.length;
-    // next[i]代表下标 0 -> i-1 的子串重复前后缀的最大长度
     int[] next = new int[N];
-    next[0] = -1; 
+    next[0] = -1;   // 作为i需要进一位的标志。
     int i = 0;
     int j = -1;
 
@@ -15,6 +18,8 @@ class Solution {
         j++;
         next[i] = j;
       } else { 
+        // 向前回溯到重复前缀的下一个字符进行比较
+        // 直到相等或j == -1
         j = next[j];
       }
     }
